@@ -1,2 +1,3 @@
-# pythonOOP-stockControlSystem
-A Python OOP application to track inbound and outbound goods
+# Python with OOP
+
+An application to track inbound and outbound goods on a stock system
