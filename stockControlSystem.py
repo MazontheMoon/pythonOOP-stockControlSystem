@@ -46,7 +46,7 @@ class GoodsIn(Goods):
 
     # Display Product Information
     def getProductDetails(self):
-        print("Product: ", self.prodCode, "-", self.prodName, "-", self.prodDescription)
+        return f"{self.prodCode} - {self.prodName} - {self.prodDescription}"
     
     # Calculate Storage Charge
     def calcStorageCharge(self):
@@ -63,7 +63,7 @@ class GoodsOut(Goods):
 
     # Display Product Information
     def getProductDetails(self):
-        print("Product: ", self.prodCode, "-", self.prodName)
+        return f"{self.prodCode} - {self.prodName}"
 
     # Get Delivery Registration Number
     def getRegNumber(self):
@@ -71,6 +71,9 @@ class GoodsOut(Goods):
 
 # Main Program
 def main():
+
+    # Variables
+    orders = []
 
     # Get User Input
     print("=".ljust(50, "="))
@@ -87,32 +90,37 @@ def main():
     if goodsType.upper() == "I":
         supplierCode = input("Enter Supplier Code: ")
         goods = GoodsIn(prodCode, prodName, prodDescription, prodPrice, quantity, supplierCode)
+        orders.append(goods)
     else:
         customerName = input("Enter Customer Name: ")
         deliveryRegNumber = input("Enter Delivery Van Registration Number: ")
         goods = GoodsOut(prodCode, prodName, prodDescription, prodPrice, quantity, customerName, deliveryRegNumber)
-        
-    # Process Goods Inbound
-    if isinstance(goods, GoodsIn):
-        print("-".ljust(50, "-"))
-        print("Goods Inbound".center(50))
-        print("-".ljust(50, "-"))
-        print("Product: ", goods.getProductDetails())
-        print("Quantity: ",goods.getQuantity())
-        print("Supplier Code: ", goods.supplierCode)
-        print("Storage Charge: €", goods.calcStorageCharge())
-        print("-".ljust(50, "-"))
+        orders.append(goods)
 
-    # Process Goods Outbound
-    if isinstance(goods, GoodsOut):
-        print("-".ljust(50, "-"))
-        print("Goods Outbound".center(50))
-        print("-".ljust(50, "-"))
-        print("Product: ", goods.getProductDetails())
-        print("Quantity: ",goods.getQuantity())
-        print("Customer: ",goods.customerName)
-        print("Delivery Registration No.: ", goods.getRegNumber())
-        print("-".ljust(50, "-"))
+    # Process Orders
+    for order in orders:
+        
+        # Process Goods Inbound
+        if isinstance(order, GoodsIn):
+            print("-".ljust(50, "-"))
+            print("Goods Inbound".center(50))
+            print("-".ljust(50, "-"))
+            print("Product: ",goods.getProductDetails())
+            print("Quantity: ",goods.getQuantity())
+            print("Supplier Code: ", goods.supplierCode)
+            print("Storage Charge: €", goods.calcStorageCharge())
+            print("-".ljust(50, "-"))
+
+        # Process Goods Outbound
+        if isinstance(order, GoodsOut):
+            print("-".ljust(50, "-"))
+            print("Goods Outbound".center(50))
+            print("-".ljust(50, "-"))
+            print("Product: ", goods.getProductDetails())
+            print("Quantity: ",goods.getQuantity())
+            print("Customer: ",goods.customerName)
+            print("Delivery Registration No.: ", goods.getRegNumber())
+            print("-".ljust(50, "-"))
     
 main()
     
