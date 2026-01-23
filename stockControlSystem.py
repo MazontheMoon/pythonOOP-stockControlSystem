@@ -1,7 +1,10 @@
-# SD-GAL-05 SD-TA-007 Exercise 005
-# Author: Mary Ronan
-# Last Modified: 22/01/2026
-# OOP Python - Stock Control System
+'''
+SD-GAL-05 SD-TA-007 Exercise 005
+Author: Mary Ronan
+Last Modified: 22/01/2026
+OOP Python - Stock Control System
+'''
+from abc import ABC, abstractmethod
 
 # Class
 class Product:
@@ -13,8 +16,8 @@ class Product:
         self.prodDescription = prodDescription
         self.prodPrice = prodPrice
 
-# Class
-class Goods(Product):
+# Abstract Class
+class Goods(Product, ABC):
 
     # Class Instance
     def __init__(self, prodCode, prodName, prodDescription, prodPrice, quantity):
@@ -24,6 +27,11 @@ class Goods(Product):
     # Get Product Quantity
     def getQuantity(self):
         return self.quantity
+
+    # Display Product Information
+    @abstractmethod
+    def getProductDetails(self):
+        pass
 
 # Class 
 class GoodsIn(Goods):
@@ -36,6 +44,10 @@ class GoodsIn(Goods):
         super().__init__(prodCode, prodName, prodDescription, prodPrice, quantity)
         self.supplierCode = supplierCode
 
+    # Display Product Information
+    def getProductDetails(self):
+        print("Product: ", self.prodCode, "-", self.prodName, "-", self.prodDescription)
+    
     # Calculate Storage Charge
     def calcStorageCharge(self):
         return self.storageCharge * self.quantity
@@ -48,6 +60,10 @@ class GoodsOut(Goods):
         super().__init__(prodCode, prodName, prodDescription, prodPrice, quantity)
         self.customerName = customerName
         self.deliveryRegNumber = deliveryRegNumber
+
+    # Display Product Information
+    def getProductDetails(self):
+        print("Product: ", self.prodCode, "-", self.prodName)
 
     # Get Delivery Registration Number
     def getRegNumber(self):
@@ -81,7 +97,7 @@ def main():
         print("-".ljust(50, "-"))
         print("Goods Inbound".center(50))
         print("-".ljust(50, "-"))
-        print("Product Code: ", goods.prodCode)
+        print("Product: ", goods.getProductDetails())
         print("Quantity: ",goods.getQuantity())
         print("Supplier Code: ", goods.supplierCode)
         print("Storage Charge: €", goods.calcStorageCharge())
@@ -92,10 +108,10 @@ def main():
         print("-".ljust(50, "-"))
         print("Goods Outbound".center(50))
         print("-".ljust(50, "-"))
-        print("Product Code: ", goods.prodCode)
+        print("Product: ", goods.getProductDetails())
         print("Quantity: ",goods.getQuantity())
         print("Customer: ",goods.customerName)
-        print("Delivery Registration: ", goods.getRegNumber())
+        print("Delivery Registration No.: ", goods.getRegNumber())
         print("-".ljust(50, "-"))
     
 main()
